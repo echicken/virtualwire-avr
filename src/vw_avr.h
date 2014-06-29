@@ -34,8 +34,8 @@
 // 1000000/9600 = 104.17. That'll also give us 9615bps. As the previous
 // settings fire the timer slower we'll choose that.
 
-#define VW_AVR_PRESCALER 8
-#define VW_AVR_COMPARE   13
+#define VW_AVR_PRESCALER 5 // Prescaler 1024
+#define VW_AVR_COMPARE   9
 
 // Mode flags
 #define VW_AVR_MODE_TX   0x01
