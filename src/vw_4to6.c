@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "vw_4to6.h"
 
 static uint8_t symbols[] =

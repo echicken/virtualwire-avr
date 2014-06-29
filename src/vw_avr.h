@@ -38,11 +38,11 @@
 #define VW_AVR_COMPARE   13
 
 // Mode flags
-#define VW_AVR_MODE_NONE 0x00
 #define VW_AVR_MODE_TX   0x01
 #define VW_AVR_MODE_RX   0x02
 
-extern void vw_avr_setup(uint8_t mode);
-extern void vw_avr_calculate_timer(uint8_t *prescaler, uint8_t *compare);
+extern void    vw_avr_setup(uint8_t mode);
+extern uint8_t vw_avr_tx_in_progress();
+extern void    vw_avr_send(uint8_t* buffer);
 
 #endif
