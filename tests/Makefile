@@ -1,4 +1,4 @@
-CFLAGS=-g -Wall -Wextra -Os -I../src
+CFLAGS=-g -Wall -Wextra -Os -I../src -Imock
 
 SOURCES=$(wildcard ../src/**/*.c ../src/*.c)
 OBJECTS=$(patsubst ../src/%.c,build/%.o,$(SOURCES))
