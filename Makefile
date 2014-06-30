@@ -2,9 +2,9 @@ CC=avr-gcc
 AR=avr-ar
 RANLIB=avr-ranlib
 
-MCU=attiny85
+MCPU=attiny85
 F_CPU=1000000
-CFLAGS=-Wall -Os -mmcu=$(MCU) -DF_CPU=$(F_CPU)
+CFLAGS=-Wall -Os -mmcu=$(MCPU) -DF_CPU=$(F_CPU)
 
 SOURCES=$(wildcard src/**/*.c src/*.c)
 OBJECTS=$(patsubst src/%.c,build/%.o,$(SOURCES))

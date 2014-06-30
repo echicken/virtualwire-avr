@@ -9,8 +9,9 @@ OBJECTS = main.o libvirtualwire.a
 default: compile
 
 libvirtualwire.a:
-	make -C ../..
-	ln -sv ../../build/libvirtualwire.a .
+	make clean -C ../..
+	make F_CPU=$(F_CPU) MCPU=$(MCPU) -C ../..
+	cp ../../build/libvirtualwire.a .
 
 compile: $(OBJECTS)
 	$(CC) $(CFLAGS) $(OBJECTS) -o main.elf
