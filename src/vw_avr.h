@@ -39,10 +39,11 @@
 // second. That is two high, but we can also set the compare register,
 // 1000000/9600 = 104.17. That'll also give us 9615bps. As the previous
 // settings fire the timer slower we'll choose that.
-#define VW_AVR_PRESCALER 5 // Prescaler 1024
 #if __AVR_ATmega8__
-#define VW_AVR_COMPARE   1
+#define VW_AVR_PRESCALER 4 // Prescaler 256
+#define VW_AVR_COMPARE   3
 #else
+#define VW_AVR_PRESCALER 5 // Prescaler 1024
 #define VW_AVR_COMPARE   9
 #endif
 

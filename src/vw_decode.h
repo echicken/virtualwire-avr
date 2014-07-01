@@ -11,9 +11,7 @@
 #define VW_DECODE_STATE_DATA 0x1
 
 typedef void (*vw_decode_callback_t)(uint8_t*);
-typedef void (*vw_decode_bits_callback_t)(uint16_t*);
 extern vw_decode_callback_t vw_decode_callback;
-extern vw_decode_bits_callback_t vw_decode_bits_callback;
 
 void vw_decode_bit(uint8_t bit);
 
