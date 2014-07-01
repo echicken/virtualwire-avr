@@ -8,9 +8,15 @@
 #define VW_AVR_TX_DDR  DDRB
 #define VW_AVR_TX_PIN  PINB1
 
+#if __AVR_ATmega8__
+#define VW_AVR_RX_PORT PINB
+#define VW_AVR_RX_DDR  DDRB
+#define VW_AVR_RX_PIN  PINB0
+#else
 #define VW_AVR_RX_PORT PORTB
 #define VW_AVR_RX_DDR  DDRB
 #define VW_AVR_RX_PIN  PINB2
+#endif
 
 // Timer configuration
 // If we want a speed of 9600bps we need to fire the interupt that many times:
@@ -33,9 +39,12 @@
 // second. That is two high, but we can also set the compare register,
 // 1000000/9600 = 104.17. That'll also give us 9615bps. As the previous
 // settings fire the timer slower we'll choose that.
-
 #define VW_AVR_PRESCALER 5 // Prescaler 1024
+#if __AVR_ATmega8__
+#define VW_AVR_COMPARE   1
+#else
 #define VW_AVR_COMPARE   9
+#endif
 
 // Mode flags
 #define VW_AVR_MODE_TX   0x01

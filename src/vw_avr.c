@@ -2,6 +2,8 @@
 #include <avr/io.h>
 #include <avr/interrupt.h>
 #include "vw_avr.h"
+#include "vw_pll.h"
+#include "vw_decode.h"
 
 static volatile uint8_t  vw_mode;
 
@@ -27,10 +29,17 @@ void vw_avr_setup(uint8_t mode) {
   }
 
   // setup timer
+  #if __AVR_ATmega8__
+  // ATmega8 doesn't support output compare on Timer0
+  TCCR1B = VW_AVR_PRESCALER | (1 << WGM12); // set prescaler and CTC mode
+  OCR1A  = VW_AVR_COMPARE;                  // set compare value
+  TIMSK |= (1 << OCIE1A);                   // interupt on compare match
+  #else
   TCCR0A = (1 << WGM01);     // CTC mode
   TCCR0B = VW_AVR_PRESCALER; // set prescaler
   OCR0A  = VW_AVR_COMPARE;   // set compare value
   TIMSK |= (1 << OCIE0A);    // interupt on compare match
+  #endif
 
   sei(); // enable interrupts
 };
@@ -76,8 +85,23 @@ void vw_avr_transmit() {
   }
 }
 
+void vw_avr_receive() {
+  if (VW_AVR_RX_PORT & (1 << VW_AVR_RX_PIN)) {
+    vw_pll(1, &vw_decode_bit);
+  } else {
+    vw_pll(0, &vw_decode_bit);
+  }
+}
+
+#if __AVR_ATmega8__
+ISR(TIMER1_COMPA_vect) {
+#else
 ISR(TIMER0_COMPA_vect) {
+#endif
   if (tx_in_progress) {
     vw_avr_transmit();
+  }
+  if (vw_mode & VW_AVR_MODE_RX) {
+    vw_avr_receive();
   }
 }

@@ -14,3 +14,24 @@ void vw_4to6_encode(uint8_t data, uint8_t* buffer, uint8_t* index) {
   buffer[(*index)++] = symbols[data >> 4];
   buffer[(*index)++] = symbols[data & 0xf];
 }
+
+// Decodes a single 6 bit symbol into a 4 bit nibble.
+uint8_t vw_4to6_decode_symbol(uint8_t symbol) {
+  uint8_t i;
+
+  for(i = 0; i < 16; i++) {
+    if (symbol == symbols[i]) {
+      return i;
+    }
+  }
+
+  return 0;
+}
+
+// Decodes the given two 6 bit symbols into a 8 bit byte. High nibble then low
+// nibble. Index is a counter to the position in the buffer, which is
+// incremented by 1 on each call.
+void vw_4to6_decode(uint16_t data, uint8_t* buffer, uint8_t* index) {
+  buffer[(*index)++] = (vw_4to6_decode_symbol(data & 0x3f) << 4)
+                   | vw_4to6_decode_symbol(data >> 6);
+}
