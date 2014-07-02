@@ -1,3 +1,5 @@
+#ifndef DISABLE_RX
+
 #include <stdint.h>
 #include "vw_pll.h"
 
@@ -39,4 +41,6 @@ void vw_pll_state(uint8_t** integrator, uint8_t** last_sample, uint8_t** ramp) {
   *last_sample = (uint8_t*) &vw_pll_last_sample;
   *ramp        = (uint8_t*) &vw_pll_ramp;
 }
+#endif
+
 #endif

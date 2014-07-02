@@ -1,5 +1,6 @@
 #ifndef VW_DECODE_H_
 #define VW_DECODE_H_
+#ifndef DISABLE_RX
 
 #include <stdint.h>
 
@@ -20,4 +21,5 @@ void vw_decode_bit(uint8_t bit);
 void vw_decode_get_state(uint8_t** bit_index, uint16_t** bits, uint8_t** buffer_index, uint8_t** buffer, uint8_t** state);
 #endif
 
+#endif
 #endif

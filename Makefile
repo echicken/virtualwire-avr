@@ -6,6 +6,10 @@ MCPU=attiny85
 F_CPU=1000000
 CFLAGS=-Wall -Os -mmcu=$(MCPU) -DF_CPU=$(F_CPU)
 
+ifeq ($(DISABLE_RX),1)
+	CFLAGS += -DDISABLE_RX
+endif
+
 SOURCES=$(wildcard src/**/*.c src/*.c)
 OBJECTS=$(patsubst src/%.c,build/%.o,$(SOURCES))
 

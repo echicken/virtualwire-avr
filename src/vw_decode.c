@@ -1,3 +1,5 @@
+#ifndef DISABLE_RX
+
 #include "vw_decode.h"
 #include "vw_pll.h"
 #include "vw_4to6.h"
@@ -50,4 +52,6 @@ void vw_decode_get_state(uint8_t** bit_index, uint16_t** bits, uint8_t** buffer_
   *buffer       = (uint8_t*)  &vw_decode_buffer;
   *state        = (uint8_t*)  &vw_decode_state;
 }
+#endif
+
 #endif

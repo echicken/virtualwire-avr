@@ -16,11 +16,13 @@ void vw_avr_setup(uint8_t mode) {
   // setup ports
   vw_mode = mode;
 
+  #ifndef DISABLE_RX
   if (mode & VW_AVR_MODE_RX) {
     // Set port as input
     VW_AVR_RX_DDR  &= ~(1 << VW_AVR_RX_PIN);
     VW_AVR_RX_PORT &= ~(1 << VW_AVR_RX_PIN);
   }
+  #endif
 
   if (mode & VW_AVR_MODE_TX) {
     // Set port as output
@@ -85,6 +87,7 @@ void vw_avr_transmit() {
   }
 }
 
+#ifndef DISABLE_RX
 void vw_avr_receive() {
   if (VW_AVR_RX_PORT & (1 << VW_AVR_RX_PIN)) {
     vw_pll(1, &vw_decode_bit);
@@ -92,6 +95,7 @@ void vw_avr_receive() {
     vw_pll(0, &vw_decode_bit);
   }
 }
+#endif
 
 #if __AVR_ATmega8__
 ISR(TIMER1_COMPA_vect) {
@@ -101,7 +105,9 @@ ISR(TIMER0_COMPA_vect) {
   if (tx_in_progress) {
     vw_avr_transmit();
   }
+  #ifndef DISABLE_RX
   if (vw_mode & VW_AVR_MODE_RX) {
     vw_avr_receive();
   }
+  #endif
 }

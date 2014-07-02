@@ -1,5 +1,6 @@
 #ifndef VW_PLL_H_
 #define VW_PLL_H_
+#ifndef DISABLE_RX
 
 #include <stdint.h>
 
@@ -18,4 +19,5 @@ extern void vw_pll(uint8_t sample, vw_pll_callback_t callback);
 extern void vw_pll_state(uint8_t** integrator, uint8_t** last_sample, uint8_t** ramp);
 #endif
 
+#endif
 #endif

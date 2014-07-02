@@ -15,6 +15,7 @@ void vw_4to6_encode(uint8_t data, uint8_t* buffer, uint8_t* index) {
   buffer[(*index)++] = symbols[data & 0xf];
 }
 
+#ifndef DISABLE_RX
 // Decodes a single 6 bit symbol into a 4 bit nibble.
 uint8_t vw_4to6_decode_symbol(uint8_t symbol) {
   uint8_t i;
@@ -35,3 +36,4 @@ void vw_4to6_decode(uint16_t data, uint8_t* buffer, uint8_t* index) {
   buffer[(*index)++] = (vw_4to6_decode_symbol(data & 0x3f) << 4)
                    | vw_4to6_decode_symbol(data >> 6);
 }
+#endif

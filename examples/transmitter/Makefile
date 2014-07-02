@@ -10,7 +10,7 @@ default: compile
 
 libvirtualwire.a:
 	make clean -C ../..
-	make F_CPU=$(F_CPU) MCPU=$(MCPU) -C ../..
+	make DISABLE_RX=1 F_CPU=$(F_CPU) MCPU=$(MCPU) -C ../..
 	cp ../../build/libvirtualwire.a .
 
 compile: $(OBJECTS)
