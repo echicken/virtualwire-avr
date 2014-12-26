@@ -16,14 +16,20 @@ static volatile uint8_t vw_pll_ramp_advance    = 0;
 static volatile uint8_t vw_pll_ramp_retard     = 0;
 static volatile uint8_t vw_pll_mode            = VW_PLL_MODE_PRE;
 
+extern void print_bit(uint8_t bit);
+extern void pll_mode(uint8_t bit);
+
 void vw_pll_set_mode(uint8_t mode) {
   vw_pll_mode       = mode;
   vw_pll_confidence = 0;
+  print_bit(3);
+  pll_mode(mode);
 }
 
 void vw_pll(uint8_t sample, vw_pll_callback_t callback) {
   if (vw_pll_mode == VW_PLL_MODE_PRE) {
     vw_pll_ramp++;
+    //print_bit(sample);
 
     if (sample != vw_pll_last_sample) {
       vw_pll_last_sample = sample;
@@ -46,6 +52,8 @@ void vw_pll(uint8_t sample, vw_pll_callback_t callback) {
           vw_pll_ramp_default    = vw_pll_ramp_length / vw_pll_clock;
           vw_pll_ramp_advance    = vw_pll_ramp_default * VW_PLL_RAMP_ADVANCE;
           vw_pll_ramp_retard     = vw_pll_ramp_default * VW_PLL_RAMP_RETARD;
+
+          print_bit(2);
         }
       } else {
         if (vw_pll_confidence > VW_PLL_CONFIDENCE_MIN) {
@@ -60,6 +68,8 @@ void vw_pll(uint8_t sample, vw_pll_callback_t callback) {
       vw_pll_integrator++;
     }
 
+    //print_bit(sample);
+
     if (sample != vw_pll_last_sample) {
       if (vw_pll_ramp < vw_pll_ramp_transition) {
         vw_pll_ramp += vw_pll_ramp_retard;
@@ -72,6 +82,7 @@ void vw_pll(uint8_t sample, vw_pll_callback_t callback) {
     }
 
     if (vw_pll_ramp >= vw_pll_ramp_length) {
+      print_bit(4);
       if (vw_pll_integrator >= (vw_pll_clock / 2)) {
         callback(1);
       } else {
@@ -86,6 +97,7 @@ void vw_pll(uint8_t sample, vw_pll_callback_t callback) {
           vw_pll_mode = VW_PLL_MODE_PRE;
           vw_pll_confidence = 0;
           vw_pll_ramp = 0;
+          print_bit(3);
         }
       }
     }

@@ -11,14 +11,10 @@ uint8_t* vw_encode(uint8_t* data, uint8_t data_length)
   uint8_t* buffer        = malloc(packet_length + 9); // 8 byte preamble and null terminated
   uint16_t crc           = 0xffff;
 
-  // The first 36 bits are alternating the training preamble, alternating 1
+  // The first 240 bits are alternating the training preamble, alternating 1
   // and 0. This is used to set the autogain correctly on the receiver.
-  buffer[index++] = 0x2a;
-  buffer[index++] = 0x2a;
-  buffer[index++] = 0x2a;
-  buffer[index++] = 0x2a;
-  buffer[index++] = 0x2a;
-  buffer[index++] = 0x2a;
+  for(i = 0; i <= 23; i++)
+    buffer[index++] = 0x2a;
 
   // Followed by 12 bits sync vector / start symbol so we know where the
   // packet begins and we haven't just received noise.

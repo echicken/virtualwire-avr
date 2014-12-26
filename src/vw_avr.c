@@ -46,6 +46,21 @@ void vw_avr_setup(uint8_t mode) {
   sei(); // enable interrupts
 };
 
+void vw_avr_disable() {
+    #if __AVR_ATmega8__
+    #else
+    // cleanup timer
+    TCCR0A &= ~(1 << WGM01);   // disable CTC mode
+    TIMSK &= ~(1 << OCIE0A);   // disable interupt on compare match
+    #endif
+
+    if (vw_mode & VW_AVR_MODE_TX) {
+        // Disable port
+        VW_AVR_TX_DDR  &= ~(1 << VW_AVR_TX_PIN);
+        VW_AVR_TX_PORT &= ~(1 << VW_AVR_TX_PIN);
+    }
+}
+
 void vw_avr_send(uint8_t* buffer) {
   if (vw_mode & VW_AVR_MODE_TX) {
     tx_buffer      = buffer;

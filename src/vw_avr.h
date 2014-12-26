@@ -40,11 +40,13 @@
 // 1000000/9600 = 104.17. That'll also give us 9615bps. As the previous
 // settings fire the timer slower we'll choose that.
 #if __AVR_ATmega8__
-#define VW_AVR_PRESCALER 4 // Prescaler 256
-#define VW_AVR_COMPARE   3
+// RX loop 4032 times per second
+#define VW_AVR_PRESCALER (1 << CS01) // Prescaler 8
+#define VW_AVR_COMPARE   10
 #else
-#define VW_AVR_PRESCALER 5 // Prescaler 1024
-#define VW_AVR_COMPARE   9
+// 500 baud rate
+#define VW_AVR_PRESCALER (1 << CS01) // Prescaler 8
+#define VW_AVR_COMPARE   250
 #endif
 
 // Mode flags
@@ -52,6 +54,7 @@
 #define VW_AVR_MODE_RX   0x02
 
 extern void    vw_avr_setup(uint8_t mode);
+extern void    vw_avr_disable();
 extern uint8_t vw_avr_tx_in_progress();
 extern void    vw_avr_send(uint8_t* buffer);
 

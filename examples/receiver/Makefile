@@ -1,5 +1,5 @@
 MCPU    = atmega8
-F_CPU   = 1000000
+F_CPU   = 4000000
 CC      = avr-gcc
 CFLAGS  = -Wall -Os -DF_CPU=$(F_CPU) -mmcu=$(MCPU) -I../../src
 OBJCOPY = avr-objcopy
@@ -26,8 +26,8 @@ clean:
 	$(CC) $(CFLAGS) -c $<
 
 fuse:
-	# set 1Mhz
-	avrdude -p m8 -U lfuse:w:0xe1:m -U hfuse:w:0xd9:m
+	# set to 4MHz internal
+	avrdude -p m8 -U lfuse:w:0xe3:m -U hfuse:w:0xd9:m
 
 flash:
 	avrdude -p m8 -U flash:w:main.hex

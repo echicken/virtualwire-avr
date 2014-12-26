@@ -13,7 +13,7 @@
 #define VW_PLL_CONFIDENCE_MAX       255
 #define VW_PLL_CONFIDENCE_MIN       0
 #define VW_PLL_CONFIDENCE_DIVISOR   6
-#define VW_PLL_LOCK_MAX             100
+#define VW_PLL_LOCK_MAX             200
 #define VW_PLL_RAMP_LENGTH          180
 #define VW_PLL_RAMP_ADVANCE         1.8
 #define VW_PLL_RAMP_RETARD          0.2

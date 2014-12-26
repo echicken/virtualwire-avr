@@ -10,22 +10,27 @@ int main(void)
   while(1) {
     vw_avr_send(vw_encode("Hello world!", 13));
 
+    // sleep 5 seconds
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
+
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
+
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
+
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);
+
     _delay_ms(250);
     _delay_ms(250);
     _delay_ms(250);

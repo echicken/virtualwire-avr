@@ -1,6 +1,7 @@
 #include <avr/pgmspace.h>
 #include <stdlib.h>
 #include <vw_avr.h>
+#include <vw_pll.h>
 #include <vw_decode.h>
 #include "uart.h"
 
@@ -9,8 +10,13 @@ uint8_t packet = 0;
 
 void print_packet(uint8_t* rx_buffer) {
   uint8_t length = rx_buffer[0] - 3;
-  uart_newline();
 
+  if (length > 150) {
+    uart_sendchar('E');
+    return;
+  }
+
+  uart_newline();
   uart_sendstr_p(PSTR("Packet: "));
   utoa(packet++, (char *)msg_buf, 10);
   uart_sendstr((char *)msg_buf);
@@ -37,6 +43,36 @@ void print_packet(uint8_t* rx_buffer) {
     uart_newline();
   }
   uart_newline();
+}
+
+uint8_t counter = 0;
+
+void print_bit(uint8_t bit) {
+    //return;
+    if (bit) {
+        uart_sendchar('1');
+    } else {
+        uart_sendchar('0');
+    }
+
+    if (counter++ > 150) {
+        counter = 0;
+        uart_newline();
+    }
+}
+
+void pll_mode(uint8_t mode) {
+    switch(mode) {
+        case VW_PLL_MODE_PRE:
+          uart_sendchar('P');
+          break;
+        case VW_PLL_MODE_LOCKED:
+          uart_sendchar('L');
+          break;
+        case VW_PLL_MODE_DATA:
+          uart_sendchar('D');
+          break;
+    }
 }
 
 int main(void)
